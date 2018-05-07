@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minifying", "Minifying\Minifying.csproj", "{9380F5D3-C8BA-44E1-89B1-C5EDCD569A6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{20B6DDB7-53DC-499E-A02D-6086A1E2B928}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9380F5D3-C8BA-44E1-89B1-C5EDCD569A6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9380F5D3-C8BA-44E1-89B1-C5EDCD569A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9380F5D3-C8BA-44E1-89B1-C5EDCD569A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9380F5D3-C8BA-44E1-89B1-C5EDCD569A6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20B6DDB7-53DC-499E-A02D-6086A1E2B928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20B6DDB7-53DC-499E-A02D-6086A1E2B928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20B6DDB7-53DC-499E-A02D-6086A1E2B928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20B6DDB7-53DC-499E-A02D-6086A1E2B928}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CB57B16-D869-46DE-AB48-F7D6C64512F1}
+	EndGlobalSection
+EndGlobal
