@@ -3,48 +3,41 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="AntlrGrammars\Css\Css.g4" />
-  </ItemGroup>
+  
   <ItemGroup>
     <Antlr4 Include="AntlrGrammars/Html/HtmlLexer.g4">
       <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>AntlrGrammars</CustomToolNamespace>
+      <CustomToolNamespace>AntlrGrammars.Html</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="AntlrGrammars/Html/HtmlParser.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>AntlrGrammars.Html</CustomToolNamespace>
       <Listener>False</Listener>
       <Visitor>True</Visitor>
     </Antlr4>
-  </ItemGroup>
-  <ItemGroup>
     <Antlr4 Include="AntlrGrammars/Css/Css.g4">
       <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>AntlrGrammars</CustomToolNamespace>
+      <CustomToolNamespace>AntlrGrammars.Css</CustomToolNamespace>
       <Listener>False</Listener>
       <Visitor>True</Visitor>
     </Antlr4>
-  </ItemGroup>
-  <ItemGroup>
     <Antlr4 Include="AntlrGrammars/Js/Js.g4">
       <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>AntlrGrammars</CustomToolNamespace>
+      <CustomToolNamespace>AntlrGrammars.Js</CustomToolNamespace>
       <Listener>False</Listener>
       <Visitor>True</Visitor>
     </Antlr4>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AntlrGrammars\Css\Css.g4" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Antlr4" Version="4.6.4" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AntlrGrammars\Html\" />
-    <Folder Include="Abstract\" />
-    <Folder Include="Concrete\CssEditors\" />
-    <Folder Include="Concrete\HtmlEditors\" />
-    <Folder Include="Concrete\JsEditors\" />
-    <Folder Include="Concrete\Visitors\Css\" />
-    <Folder Include="Concrete\Visitors\Js\" />
-    <Folder Include="Concrete\Visitors\Html\" />
+    <Folder Include="AntlrGrammars\Css\" />
+    <Folder Include="AntlrGrammars\Js\" />
+    <Folder Include="Concrete\Css\Editors\" />
+    <Folder Include="Concrete\Html\Editors\" />
+    <Folder Include="Concrete\Js\Editors\" />
+    <Folder Include="Concrete\Js\Visitors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Antlr4" Version="4.6.4" />
   </ItemGroup>
 </Project>

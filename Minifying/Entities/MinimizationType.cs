@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using AntlrGrammars;
 
-namespace Minifying
+namespace Minifying.Entities
 {
-    class Class1
+    [Flags]
+    public enum MinimizationType
     {
-        HtmlLexer htmlLexer;
+
     }
 }

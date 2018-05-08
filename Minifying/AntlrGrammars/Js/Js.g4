@@ -1,4 +1,4 @@
-﻿grammar ECMAScript;
+﻿grammar Js;
 
 @parser::members {
   
