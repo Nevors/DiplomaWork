@@ -26,10 +26,10 @@ namespace Minifying.Common {
 
             if (fileParsers.ContainsKey(type)) {
                 result.Tree = fileParsers[type].ToParse(stream);
-            } else {
-                result.Stream = stream;
             }
 
+            result.Stream = stream;
+            
             return result;
         }
 

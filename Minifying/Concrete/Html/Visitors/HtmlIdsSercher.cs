@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using AntlrGrammars.Html;
 using Antlr4.Runtime.Misc;
+using Minifying.Common;
+using System.Linq;
+using Antlr4.Runtime;
+using Minifying.Concrete.Html.Models;
 
 namespace Minifying.Concrete.Html.Visitors {
-    class IdsSercher {
-        public void Search(IParseTree tree, Dictionary<string, int> freqList) {
+    class HtmlIdsSercher {
+        public void Search(IParseTree tree, FreqList<string> freqList) {
             new Visitor(freqList).Visit(tree);
         }
 
         class Visitor : HtmlParserBaseVisitor<object> {
-            private Dictionary<string, int> freqList;
-            public Visitor(Dictionary<string, int> freqList) {
+            private FreqList<string> freqList;
+            public Visitor(FreqList<string> freqList) {
                 this.freqList = freqList;
             }
             public override object VisitHtmlAttribute([NotNull] HtmlParser.HtmlAttributeContext context) {
@@ -22,18 +26,10 @@ namespace Minifying.Concrete.Html.Visitors {
 
                 bool isId = string.Equals("id", name, StringComparison.OrdinalIgnoreCase);
                 if (isId) {
-                    var contextValue = context.htmlAttributeValue();
-                    var token = contextValue.ATTVALUE_VALUE();
-                    //contextValue.ch
-                    string text = token.Symbol.Text;
-
-                    if (freqList.ContainsKey(text)) {
-                        freqList[text]++;
-                    } else {
-                        freqList.Add(text, 0);
-                    }
+                    var mangerAttr = new ManagerAttribute(context);
+                    freqList.Increment(mangerAttr.Value);
                 }
-                return base.VisitHtmlAttribute(context);
+                return null;
             }
         }
     }

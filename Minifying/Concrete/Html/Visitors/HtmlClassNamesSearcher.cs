@@ -1,19 +1,21 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using AntlrGrammars.Html;
+using Minifying.Common;
+using Minifying.Concrete.Html.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Minifying.Concrete.Html.Visitors {
-    class ClassNameSearcher {
-        public void Search(IParseTree tree, Dictionary<string, int> freqList) {
+    class HtmlClassNamesSearcher {
+        public void Search(IParseTree tree, FreqList<string> freqList) {
             new Visitor(freqList).Visit(tree);
         }
 
         class Visitor : HtmlParserBaseVisitor<object> {
-            private Dictionary<string, int> freqList;
-            public Visitor(Dictionary<string, int> freqList) {
+            private FreqList<string> freqList;
+            public Visitor(FreqList<string> freqList) {
                 this.freqList = freqList;
             }
             public override object VisitHtmlAttribute([NotNull] HtmlParser.HtmlAttributeContext context) {
@@ -22,19 +24,13 @@ namespace Minifying.Concrete.Html.Visitors {
 
                 bool isClass = string.Equals("class", name, StringComparison.OrdinalIgnoreCase);
                 if (isClass) {
-                    var contextValue = context.htmlAttributeValue();
-                    var token = contextValue.ATTVALUE_VALUE();
-                    string text = token.Symbol.Text;
+                    var mangerAttr = new ManagerAttribute(context);
 
-                    foreach (var className in text.Split(' ')) {
-                        if (freqList.ContainsKey(className)) {
-                            freqList[className]++;
-                        } else {
-                            freqList.Add(className, 0);
-                        }
+                    foreach (var className in mangerAttr.Value.Split(' ')) {
+                        freqList.Increment(className);
                     }
                 }
-                return base.VisitHtmlAttribute(context);
+                return null;
             }
         }
     }

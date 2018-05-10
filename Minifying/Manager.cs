@@ -19,7 +19,19 @@ namespace Minifying {
             IdsNameEditor idsNameEditor = new IdsNameEditor();
             idsNameEditor.ToEdit(valueProvider);
 
-            var result = valueProvider.GetFiles().ToDictionary(k => k.FileName, v => v.Stream);
+            var resultFiles = valueProvider.GetFiles();
+            foreach (var file in resultFiles) {
+                if (file.Tree != null) {
+                    Console.WriteLine(file.Tree.GetText());
+                    var ms = new MemoryStream();
+                    var stream = new StreamWriter(ms);
+                    stream.Write(file.Tree.GetText());
+                    ms.Position = 0;
+                    file.Stream = ms;
+                }
+            }
+
+            var result = resultFiles.ToDictionary(k => k.FileName, v => v.Stream);
 
             return result;
         }

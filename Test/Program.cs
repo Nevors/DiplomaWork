@@ -15,13 +15,18 @@ namespace Test
         static void Main(string[] args)
         {
             string fileName;
-            string text = "";
 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
             fileName = ofd.FileName;
-            Manager.ToMinimize(new Dictionary<string, Stream> { { fileName, new FileStream(fileName, FileMode.Open) } },0);
+            var files = new Dictionary<string, Stream> { { fileName, new FileStream(fileName, FileMode.Open) } };
+            var result = Manager.ToMinimize(files, 0);
 
+            foreach (var file in result) {
+                Console.WriteLine(file.Key);
+                file.Value.Position = 0;
+                Console.WriteLine(new StreamReader(file.Value).ReadToEnd());
+            }
             Console.ReadKey();
         }
     }

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Minifying.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Minifying.Concrete.Common {
-    class NameGenerator {
+    class NameGenerator : INameGenerator {
         private char[] posibleValueFirst;
         private char[] posibleValue;
 

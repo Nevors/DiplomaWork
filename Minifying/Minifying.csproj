@@ -29,6 +29,7 @@
     </Antlr4>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Abstract\Visitors\" />
     <Folder Include="AntlrGrammars\Html\" />
     <Folder Include="AntlrGrammars\Css\" />
     <Folder Include="AntlrGrammars\Js\" />
@@ -38,6 +39,7 @@
     <Folder Include="Concrete\Js\Visitors\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr4" Version="4.6.4" />
+    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.4" />
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.4" />
   </ItemGroup>
 </Project>
