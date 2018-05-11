@@ -27,7 +27,7 @@ namespace Minifying.Concrete.Css.Visitors
                     string text = id.GetText();
 
                     if (idsMap.ContainsKey(text)) {
-                        var newNode = new CommonToken(CssParser.RULE_attrib, idsMap[text]);
+                        var newNode = new CommonToken(CssParser.Hash, idsMap[text]);
                         context.Replace(id, newNode);
                     }
                 }

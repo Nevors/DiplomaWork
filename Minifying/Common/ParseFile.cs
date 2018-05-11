@@ -16,8 +16,10 @@ namespace Minifying.Common {
             { FileType.Html,new HtmlParser() }
         };
 
-        public static File ToParse(string relativeName, IO.Stream stream) {
-            FileType type = GetFileType(relativeName);
+        public static File ToParse(string relativeName, IO.Stream stream, FileType type = FileType.None) {
+            if(type == FileType.None) {
+                type = GetFileType(relativeName);
+            }
 
             File result = new File {
                 FileName = relativeName,

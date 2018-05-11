@@ -72,9 +72,13 @@ scriptlet
     ;
 
 script
-    : SCRIPT_OPEN ( SCRIPT_BODY | SCRIPT_SHORT_BODY)
+    : SCRIPT_OPEN htmlAttribute* TAG_CLOSE htmlContent TAG_OPEN TAG_SLASH htmlTagName TAG_CLOSE
+    | SCRIPT_OPEN htmlAttribute* TAG_SLASH_CLOSE
+    | SCRIPT_OPEN htmlAttribute* TAG_CLOSE
     ;
 
 style
-    : STYLE_OPEN ( STYLE_BODY | STYLE_SHORT_BODY)
+    : STYLE_OPEN htmlAttribute* TAG_CLOSE htmlContent TAG_OPEN TAG_SLASH htmlTagName TAG_CLOSE
+    | STYLE_OPEN htmlAttribute* TAG_SLASH_CLOSE
+    | STYLE_OPEN htmlAttribute* TAG_CLOSE
     ;

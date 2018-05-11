@@ -34,7 +34,6 @@
     <Folder Include="AntlrGrammars\Css\" />
     <Folder Include="AntlrGrammars\Js\" />
     <Folder Include="Concrete\Css\Editors\" />
-    <Folder Include="Concrete\Html\Editors\" />
     <Folder Include="Concrete\Js\Editors\" />
     <Folder Include="Concrete\Js\Visitors\" />
   </ItemGroup>

@@ -30,11 +30,11 @@ SEA_WS
     ;
 
 SCRIPT_OPEN
-    : '<script' .*? '>' ->pushMode(SCRIPT)
+    : '<script' ->pushMode(TAG)
     ;
 
 STYLE_OPEN
-    : '<style' .*? '>'  ->pushMode(STYLE)
+    : '<style' ->pushMode(TAG)
     ;
 
 TAG_OPEN
@@ -107,32 +107,6 @@ TAG_NameStartChar
     |   '\u3001'..'\uD7FF'
     |   '\uF900'..'\uFDCF'
     |   '\uFDF0'..'\uFFFD'
-    ;
-
-//
-// <scripts>
-//
-mode SCRIPT;
-
-SCRIPT_BODY
-    : .*? '</script>' -> popMode
-    ;
-
-SCRIPT_SHORT_BODY
-    : .*? '</>' -> popMode
-    ;
-
-//
-// <styles>
-//
-mode STYLE;
-
-STYLE_BODY
-    : .*? '</style>' -> popMode
-    ;
-
-STYLE_SHORT_BODY
-    : .*? '</>' -> popMode
     ;
 
 //

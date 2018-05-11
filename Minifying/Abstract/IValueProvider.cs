@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Minifying.Abstract {
     public interface IValueProvider {
+        void AddFile(File file);
         File GetFile(string fileName);
         List<File> GetFiles(FileType type);
         List<File> GetFiles();

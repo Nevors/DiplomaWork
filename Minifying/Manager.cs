@@ -1,6 +1,7 @@
 ﻿using Minifying.Common;
 using Minifying.Concrete.Common;
 using Minifying.Concrete.Common.Editors;
+using Minifying.Concrete.Html.Editors;
 using Minifying.Entities;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace Minifying {
 
             IdsNameEditor idsNameEditor = new IdsNameEditor();
             idsNameEditor.ToEdit(valueProvider);
+
+            ReplaceInternalCode replaceInternalCode = new ReplaceInternalCode();
+            replaceInternalCode.ToEdit(valueProvider);
 
             var resultFiles = valueProvider.GetFiles();
             foreach (var file in resultFiles) {
