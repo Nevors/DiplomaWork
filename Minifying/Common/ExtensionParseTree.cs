@@ -13,5 +13,9 @@ namespace Minifying.Common {
         public static void Replace(this ParserRuleContext parent, IParseTree cur, IToken token) {
             parent.Replace(cur, new TerminalNodeImpl(token));
         }
+
+        public static void Remove(this ParserRuleContext parent, IParseTree node) {
+            parent.children.Remove(node);
+        }
     }
 }

@@ -7,7 +7,7 @@ using AntlrGrammars.Html;
 using Minifying.Common;
 
 namespace Minifying.Concrete.Html.Models {
-    class ManagerAttribute {
+    class AttributeManager {
         private readonly HtmlParser.HtmlAttributeContext context;
         private readonly HtmlParser.HtmlAttributeValueContext contextValue;
         private readonly ITerminalNode contextValueToken;
@@ -30,7 +30,7 @@ namespace Minifying.Concrete.Html.Models {
             }
         }
 
-        public ManagerAttribute(HtmlParser.HtmlAttributeContext context) {
+        public AttributeManager(HtmlParser.HtmlAttributeContext context) {
             this.context = context;
             contextValue = context.htmlAttributeValue();
             contextValueToken = contextValue.ATTVALUE_VALUE();

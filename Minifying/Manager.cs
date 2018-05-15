@@ -20,7 +20,7 @@ namespace Minifying {
             IdsNameEditor idsNameEditor = new IdsNameEditor();
             idsNameEditor.ToEdit(valueProvider);
 
-            ReplaceInternalCode replaceInternalCode = new ReplaceInternalCode();
+            InternalContentEditor replaceInternalCode = new InternalContentEditor();
             replaceInternalCode.ToEdit(valueProvider);
 
             var resultFiles = valueProvider.GetFiles();

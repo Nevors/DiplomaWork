@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Antlr4 Include="Html/HtmlLexer.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>AntlrGrammars.Html</CustomToolNamespace>
+    </Antlr4>
+    <Antlr4 Include="Html/HtmlParser.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>AntlrGrammars.Html</CustomToolNamespace>
+      <Listener>False</Listener>
+      <Visitor>True</Visitor>
+    </Antlr4>
+    <Antlr4 Include="Css/Css.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>AntlrGrammars.Css</CustomToolNamespace>
+      <Listener>False</Listener>
+      <Visitor>True</Visitor>
+    </Antlr4>
+    <Antlr4 Include="Js/Js.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>AntlrGrammars.Js</CustomToolNamespace>
+      <Listener>False</Listener>
+      <Visitor>True</Visitor>
+    </Antlr4>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Antlr4" Version="4.6.4" />
+  </ItemGroup>
+</Project>

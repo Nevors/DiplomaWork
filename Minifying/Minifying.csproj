@@ -3,42 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Antlr4 Include="AntlrGrammars/Html/HtmlLexer.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>AntlrGrammars.Html</CustomToolNamespace>
-    </Antlr4>
-    <Antlr4 Include="AntlrGrammars/Html/HtmlParser.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>AntlrGrammars.Html</CustomToolNamespace>
-      <Listener>False</Listener>
-      <Visitor>True</Visitor>
-    </Antlr4>
-    <Antlr4 Include="AntlrGrammars/Css/Css.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>AntlrGrammars.Css</CustomToolNamespace>
-      <Listener>False</Listener>
-      <Visitor>True</Visitor>
-    </Antlr4>
-    <Antlr4 Include="AntlrGrammars/Js/Js.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>AntlrGrammars.Js</CustomToolNamespace>
-      <Listener>False</Listener>
-      <Visitor>True</Visitor>
-    </Antlr4>
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstract\Visitors\" />
-    <Folder Include="AntlrGrammars\Html\" />
-    <Folder Include="AntlrGrammars\Css\" />
-    <Folder Include="AntlrGrammars\Js\" />
     <Folder Include="Concrete\Css\Editors\" />
     <Folder Include="Concrete\Js\Editors\" />
     <Folder Include="Concrete\Js\Visitors\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.4" />
-    <PackageReference Include="Antlr4.Runtime" Version="4.6.4" />
+    <ProjectReference Include="..\AntlrGrammars\AntlrGrammars.csproj" />
   </ItemGroup>
 </Project>
