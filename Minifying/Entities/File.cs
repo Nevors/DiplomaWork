@@ -9,6 +9,7 @@ namespace Minifying.Entities {
         public IParseTree Tree { get; set; }
         public string FileName { get; set; }
         public FileType Type { get; set; }
+        public bool IsInternal { get; set; }
         public Stream Stream { get; set; }
     }
 }

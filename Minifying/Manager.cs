@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Minifying.Concrete.Js.Editors;
 
 namespace Minifying {
     public static class Manager {
@@ -17,21 +18,19 @@ namespace Minifying {
                 valueProvider.AddFile(ParseFile.ToParse(item.Key, item.Value));
             }
 
+            HtmlInternalContentEditor replaceInternalCode = new HtmlInternalContentEditor();
+            replaceInternalCode.ToEdit(valueProvider);
+
+            JsEofTokenRemover jsEofTokenRemover = new JsEofTokenRemover();
+            jsEofTokenRemover.ToEdit(valueProvider);
+
             IdsNameEditor idsNameEditor = new IdsNameEditor();
             idsNameEditor.ToEdit(valueProvider);
 
-            InternalContentEditor replaceInternalCode = new InternalContentEditor();
-            replaceInternalCode.ToEdit(valueProvider);
-
-            var resultFiles = valueProvider.GetFiles();
+            var resultFiles = valueProvider.GetFiles().Where(f => !f.IsInternal);
             foreach (var file in resultFiles) {
                 if (file.Tree != null) {
-                    Console.WriteLine(file.Tree.GetText());
-                    var ms = new MemoryStream();
-                    var stream = new StreamWriter(ms);
-                    stream.Write(file.Tree.GetText());
-                    ms.Position = 0;
-                    file.Stream = ms;
+                    file.Stream = file.Tree.GetStream();
                 }
             }
 

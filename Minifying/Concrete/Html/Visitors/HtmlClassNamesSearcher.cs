@@ -24,7 +24,7 @@ namespace Minifying.Concrete.Html.Visitors {
 
                 bool isClass = string.Equals("class", name, StringComparison.OrdinalIgnoreCase);
                 if (isClass) {
-                    var mangerAttr = new AttributeManager(context);
+                    var mangerAttr = new HtmlAttributeManager(context);
 
                     foreach (var className in mangerAttr.Value.Split(' ')) {
                         freqList.Increment(className);

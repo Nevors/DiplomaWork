@@ -26,7 +26,7 @@ namespace Minifying.Concrete.Html.Visitors {
 
                 bool isId = string.Equals("id", name, StringComparison.OrdinalIgnoreCase);
                 if (isId) {
-                    var mangerAttr = new AttributeManager(context);
+                    var mangerAttr = new HtmlAttributeManager(context);
                     freqList.Increment(mangerAttr.Value);
                 }
                 return null;

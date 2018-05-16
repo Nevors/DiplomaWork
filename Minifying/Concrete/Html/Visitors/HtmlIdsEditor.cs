@@ -24,7 +24,7 @@ namespace Minifying.Concrete.Html.Visitors {
 
                 bool isId = string.Equals("id", name, StringComparison.OrdinalIgnoreCase);
                 if (isId) {
-                    var mangerAttr = new AttributeManager(context);
+                    var mangerAttr = new HtmlAttributeManager(context);
                     string id = mangerAttr.Value;
                     if (idsMap.ContainsKey(id)) {
                         mangerAttr.Value = idsMap[id];

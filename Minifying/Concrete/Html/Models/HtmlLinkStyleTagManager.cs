@@ -10,10 +10,10 @@ using IO = System.IO;
 using System.Linq;
 
 namespace Minifying.Concrete.Html.Models {
-    class LinkStyleTagManager {
+    class HtmlLinkStyleTagManager {
         private readonly HtmlElementContext htmlElement;
-        public File File { get; set; }
-        public LinkStyleTagManager(HtmlElementContext htmlElement) {
+        public File File { get; private set; }
+        public HtmlLinkStyleTagManager(HtmlElementContext htmlElement) {
             this.htmlElement = htmlElement;
             var buffer = htmlElement.GetRuleContext<BufferValueContext<File>>(0);
             if (buffer != null) {
@@ -25,7 +25,7 @@ namespace Minifying.Concrete.Html.Models {
             var needAttr = htmlElement.htmlAttribute()
                 .ToDictionary(
                     key => key.htmlAttributeName().TAG_NAME().GetText().ToUpper(),
-                    value => new AttributeManager(value).Value
+                    value => new HtmlAttributeManager(value).Value
                 );
             if (needAttr["REL"]?.ToUpper() != "STYLESHEET") {
                 return;
@@ -35,8 +35,10 @@ namespace Minifying.Concrete.Html.Models {
             if (fileName == null) { return; }
 
             string path = pathProvider.GetPathFile(fileName);
-            File file = valueProvider.GetFile(path);
-            htmlElement.AddChild(new BufferValueContext<File>(htmlElement, file));
+            File = valueProvider.GetFile(path);
+            if (File == null) { return; }
+
+            htmlElement.AddChild(new BufferValueContext<File>(htmlElement, File));
         }
     }
 }

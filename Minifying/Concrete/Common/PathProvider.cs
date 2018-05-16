@@ -10,11 +10,17 @@ namespace Minifying.Concrete.Common
         private string siteName;
         private string relativePath;
         public PathProvider(string mainPath) {
-            relativePath =  Path.GetDirectoryName(mainPath);
+            int index = mainPath.LastIndexOf('\\');
+            if (index != -1) {
+                relativePath = mainPath.Substring(0, index + 1);
+            } else {
+                relativePath = "";
+            }          
             siteName = Path.GetPathRoot(mainPath);
         }
         public string GetPathFile(string path) {
-            if(path[0] == '\\' || path[0] == '/') {
+            path = path.Replace('/','\\');
+            if(path[0] == '/') {
                 return siteName + path;
             }
             return Path.Combine(relativePath, path);

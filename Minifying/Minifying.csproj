@@ -6,8 +6,6 @@
   <ItemGroup>
     <Folder Include="Abstract\Visitors\" />
     <Folder Include="Concrete\Css\Editors\" />
-    <Folder Include="Concrete\Js\Editors\" />
-    <Folder Include="Concrete\Js\Visitors\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AntlrGrammars\AntlrGrammars.csproj" />

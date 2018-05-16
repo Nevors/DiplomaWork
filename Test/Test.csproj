@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Minifying\Minifying.csproj">
-      <Project>{9380f5d3-c8ba-44e1-89b1-c5edcd569a6f}</Project>
+      <Project>{af9ae219-234d-4544-b5d5-8ee64bd0f9c7}</Project>
       <Name>Minifying</Name>
     </ProjectReference>
   </ItemGroup>

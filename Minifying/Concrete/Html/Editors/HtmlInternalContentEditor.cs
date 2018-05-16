@@ -8,14 +8,16 @@ using System.Text;
 
 namespace Minifying.Concrete.Html.Editors
 {
-    class InternalContentEditor : IEditor {
+    class HtmlInternalContentEditor : IEditor {
         public void ToEdit(IValueProvider valueProvider) {
             var htmlFiles = valueProvider.GetFiles(FileType.Html);
 
+            HtmlStyleEditor htmlStyleEditor = new HtmlStyleEditor();
+            HtmlJsEditor htmlJsEditor = new HtmlJsEditor();
             foreach (var item in htmlFiles) {
                 var pathProvider = new PathProvider(item.FileName);
-                new HtmlStyleEditor().Edit(item.Tree, valueProvider, pathProvider);
-                new HtmlJsEditor().Edit(item.Tree, valueProvider, pathProvider);
+                htmlStyleEditor.Edit(item.Tree, valueProvider, pathProvider);
+                htmlJsEditor.Edit(item.Tree, valueProvider, pathProvider);
             }
         }
     }

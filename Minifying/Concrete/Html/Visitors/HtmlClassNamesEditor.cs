@@ -26,7 +26,7 @@ namespace Minifying.Concrete.Html.Visitors {
 
                 bool isClass = string.Equals("class", name, StringComparison.OrdinalIgnoreCase);
                 if (isClass) {
-                    var mangerAttr = new AttributeManager(context);
+                    var mangerAttr = new HtmlAttributeManager(context);
                     string text = mangerAttr.Value;
 
                     StringBuilder sb = new StringBuilder();

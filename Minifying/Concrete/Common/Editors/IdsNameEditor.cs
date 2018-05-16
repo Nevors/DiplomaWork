@@ -8,7 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using CssV = Minifying.Concrete.Css.Visitors;
-//using Js = Minifying.Concrete.Js.Visitors;
+using JsV = Minifying.Concrete.Js.Visitors;
 using HtmlV = Minifying.Concrete.Html.Visitors;
 
 namespace Minifying.Concrete.Common.Editors {
@@ -45,6 +45,11 @@ namespace Minifying.Concrete.Common.Editors {
             foreach (var item in htmlFiles) {
                 new HtmlV.HtmlIdsEditor().Replace(item.Tree, idsMap);
                 new HtmlV.HtmlClassNamesEditor().Replace(item.Tree, classNamesMap);
+            }
+
+            foreach (var item in jsFiles) {
+                new JsV.JsIdsEditor().Replace(item.Tree, idsMap);
+                new JsV.JsClassNamesEditor().Replace(item.Tree, idsMap);
             }
         }
 

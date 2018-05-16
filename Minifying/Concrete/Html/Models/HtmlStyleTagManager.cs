@@ -9,10 +9,10 @@ using static AntlrGrammars.Html.HtmlParser;
 using IO = System.IO;
 
 namespace Minifying.Concrete.Html.Models {
-    class StyleTagManager {
+    class HtmlStyleTagManager {
         private readonly StyleContext styleContext;
-        public File File { get; }
-        public StyleTagManager(StyleContext styleContext) {
+        public File File { get; private set; }
+        public HtmlStyleTagManager(StyleContext styleContext) {
             this.styleContext = styleContext;
             if (styleContext.htmlContent() is ContentContext content) {
                 File = content.File;
@@ -21,12 +21,15 @@ namespace Minifying.Concrete.Html.Models {
 
         public void Init(IValueProvider valueProvider) {
             var curContent = styleContext.htmlContent();
-            var ms = new IO.MemoryStream();
-            new IO.StreamWriter(ms).Write(curContent.GetText());
-            ms.Position = 0;
-            File file = ParseFile.ToParse(IO.Path.GetRandomFileName(), ms, FileType.Css);
-            ContentContext content = new ContentContext(styleContext, file);
+            var stream = curContent.GetStream();
+
+            File = ParseFile.ToParse(IO.Path.GetRandomFileName(), stream, FileType.Css);
+            File.IsInternal = true;
+
+            ContentContext content = new ContentContext(styleContext, File);
             styleContext.Replace(curContent, content);
+
+            valueProvider.AddFile(File);
         }
     }
 }
