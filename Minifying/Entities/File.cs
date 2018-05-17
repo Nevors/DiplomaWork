@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 
 namespace Minifying.Entities {
-    public class File {
+    class File {
         public IParseTree Tree { get; set; }
         public string FileName { get; set; }
         public FileType Type { get; set; }

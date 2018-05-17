@@ -31,7 +31,7 @@ namespace Minifying.Concrete.Html.Visitors {
                 HtmlScriptTagManager tagManager = new HtmlScriptTagManager(context);
                 tagManager.Init(valueProvider, pathProvider);
 
-                if (tagManager.File == null) { NodesForRemove.Add(context); }
+                //if (tagManager.File == null) { NodesForRemove.Add(context); }
                 return null;
             }
 

@@ -37,7 +37,7 @@ namespace Minifying.Concrete.Html.Visitors {
 
                 var linkStyle = new HtmlLinkStyleTagManager(context);
                 linkStyle.Init(valueProvider,pathProvider);
-                if (linkStyle.File == null) { NodesForRemove.Add(context); }
+                //if (linkStyle.File == null) { NodesForRemove.Add(context); }
                 return null;
             }
 

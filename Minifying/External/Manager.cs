@@ -27,6 +27,9 @@ namespace Minifying {
             IdsNameEditor idsNameEditor = new IdsNameEditor();
             idsNameEditor.ToEdit(valueProvider);
 
+            JsWsSymbolEditor jsWsSymbolEditor = new JsWsSymbolEditor();
+            jsWsSymbolEditor.ToEdit(valueProvider);
+
             var resultFiles = valueProvider.GetFiles().Where(f => !f.IsInternal);
             foreach (var file in resultFiles) {
                 if (file.Tree != null) {

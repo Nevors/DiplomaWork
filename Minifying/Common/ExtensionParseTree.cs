@@ -19,6 +19,14 @@ namespace Minifying.Common {
             parent.children.Remove(node);
         }
 
+        public static void Insert(this ParserRuleContext parent, int index, IParseTree node) {
+            parent.children.Insert(index, node);
+        }
+
+        public static void Insert(this ParserRuleContext parent, int index, IToken token) {
+            parent.Insert(index, new TerminalNodeImpl(token));
+        }
+
         public static void Remove(this ParserRuleContext node) {
             ((ParserRuleContext)node.parent).children.Remove(node);
             node.parent = null;

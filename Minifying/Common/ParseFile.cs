@@ -9,7 +9,7 @@ using Minifying.Concrete.Js.Parsers;
 using Minifying.Concrete.Html.Parsers;
 
 namespace Minifying.Common {
-    public static class ParseFile {
+    static class ParseFile {
         private static Dictionary<FileType, IParser> fileParsers = new Dictionary<FileType, IParser> {
             { FileType.Css,new CssParser() },
             { FileType.Js,new JsParser() },

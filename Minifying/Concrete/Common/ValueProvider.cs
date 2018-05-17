@@ -6,7 +6,7 @@ using System.Linq;
 using Minifying.Abstract;
 
 namespace Minifying.Concrete.Common {
-    public class ValueProvider : IValueProvider{
+    class ValueProvider : IValueProvider{
         Dictionary<FileType, Dictionary<string, File>> files = new Dictionary<FileType, Dictionary<string, File>>();
 
         public void AddFile(File file) {
