@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Minifying.Abstract;
+using System.Threading;
 
 namespace Minifying.Concrete.Common {
     class ValueProvider : IValueProvider{
         Dictionary<FileType, Dictionary<string, File>> files = new Dictionary<FileType, Dictionary<string, File>>();
+        object obj = new object();
 
         public void AddFile(File file) {
             Dictionary<string, File> dic;
+
+            Monitor.Enter(obj);
+
             if (!files.ContainsKey(file.Type)) {
                 dic = new Dictionary<string, File>();
                 files.Add(file.Type, dic);
@@ -18,6 +23,8 @@ namespace Minifying.Concrete.Common {
                 dic = files[file.Type];
             }
             dic.Add(file.FileName, file);
+
+            Monitor.Exit(obj);
         }
 
         public File GetFile(string fileName) {

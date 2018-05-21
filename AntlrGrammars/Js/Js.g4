@@ -252,7 +252,9 @@ iterationStatement
  | For '(' expressionSequence? ';' expressionSequence? ';' expressionSequence? ')' statement         # ForStatement
  | For '(' Var variableDeclarationList ';' expressionSequence? ';' expressionSequence? ')' statement # ForVarStatement
  | For '(' singleExpression In expressionSequence ')' statement                                      # ForInStatement
+ | For '(' singleExpression Of expressionSequence ')' statement                                      # ForOfStatement
  | For '(' Var variableDeclaration In expressionSequence ')' statement                               # ForVarInStatement
+ | For '(' Var variableDeclaration Of expressionSequence ')' statement                               # ForVarOfStatement
  ;
 
 /// ContinueStatement :
@@ -593,6 +595,7 @@ singleExpression
  | singleExpression ( '<' | '>' | '<=' | '>=' ) singleExpression          # RelationalExpression
  | singleExpression Instanceof singleExpression                           # InstanceofExpression
  | singleExpression In singleExpression                                   # InExpression
+ | singleExpression Of singleExpression                                   # InExpression
  | singleExpression ( '==' | '!=' | '===' | '!==' ) singleExpression      # EqualityExpression
  | singleExpression '&' singleExpression                                  # BitAndExpression
  | singleExpression '^' singleExpression                                  # BitXOrExpression
@@ -680,6 +683,7 @@ keyword
  | Throw
  | Delete
  | In
+ | Of
  | Try
  ;
 
@@ -834,6 +838,7 @@ If         : 'if';
 Throw      : 'throw';
 Delete     : 'delete';
 In         : 'in';
+Of         : 'of';
 Try        : 'try';
 
 /// 7.6.1.2 Future Reserved Words

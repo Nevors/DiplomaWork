@@ -31,6 +31,7 @@ namespace Minifying.Concrete.Html.Models {
                     if (File == null) { return; }
                 }
             }
+            if (curContent == null) { return; }
             HtmlContentContext content = null;
             if (File == null) {
                 var stream = curContent.GetStream();
@@ -43,6 +44,7 @@ namespace Minifying.Concrete.Html.Models {
                 BufferValueContext<File> bufferValue = new BufferValueContext<File>(scriptContext, File);
                 scriptContext.AddChild(bufferValue);
                 content = new HtmlContentContext(scriptContext, 0);
+                
             }
             scriptContext.Replace(curContent, content);
         }

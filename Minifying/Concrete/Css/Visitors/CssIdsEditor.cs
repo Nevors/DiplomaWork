@@ -24,10 +24,10 @@ namespace Minifying.Concrete.Css.Visitors
             public override object VisitSimpleSelectorSequence([NotNull] CssParser.SimpleSelectorSequenceContext context) {
                 for (int i = 0; i < context.ChildCount; i++) {
                     var id = context.GetChild(i);
-                    string text = id.GetText();
+                    string text = id.GetText().Substring(1);
 
                     if (idsMap.ContainsKey(text)) {
-                        var newNode = new CommonToken(CssParser.Hash, idsMap[text]);
+                        var newNode = new CommonToken(CssParser.Hash, '#' + idsMap[text]);
                         context.Replace(id, newNode);
                     }
                 }

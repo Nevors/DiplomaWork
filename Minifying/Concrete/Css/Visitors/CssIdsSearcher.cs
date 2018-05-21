@@ -21,7 +21,7 @@ namespace Minifying.Concrete.Css.Visitors {
             public override object VisitSimpleSelectorSequence([NotNull] CssParser.SimpleSelectorSequenceContext context) {
                 var item = context.GetChild(0);
                 if (item is TerminalNodeImpl token) {
-                    string text = token.Symbol.Text;
+                    string text = token.Symbol.Text.Substring(1);
                     freqList.Increment(text);
                 }
                 return base.VisitSimpleSelectorSequence(context);

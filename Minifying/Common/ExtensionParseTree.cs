@@ -34,7 +34,8 @@ namespace Minifying.Common {
 
         public static Stream GetStream(this IParseTree node) {
             var ms = new MemoryStream();
-
+            if (node == null)
+                return ms;
             var sw = new StreamWriter(ms);
             sw.Write(node.GetText());
             sw.Flush();

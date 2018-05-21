@@ -1,10 +1,14 @@
 lexer grammar  HtmlLexer;
 
-HTML_COMMENT
-    : '<!--' .*? '-->'
+HTML_COMMENT_CONDITIONAL
+    : '<!--' '[' .*? ']' .*? '-->'
     ;
 
-HTML_CONDITIONAL_COMMENT
+HTML_COMMENT
+	: '<!--' .*? '-->'
+	;
+
+HTML_CONDITIONAL
     : '<![' .*? ']>'
     ;
 

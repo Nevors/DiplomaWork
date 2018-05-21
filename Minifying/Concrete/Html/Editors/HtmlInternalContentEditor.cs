@@ -5,20 +5,20 @@ using Minifying.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Minifying.Concrete.Html.Editors
-{
+namespace Minifying.Concrete.Html.Editors {
     class HtmlInternalContentEditor : IEditor {
         public void ToEdit(IValueProvider valueProvider) {
             var htmlFiles = valueProvider.GetFiles(FileType.Html);
 
             HtmlStyleEditor htmlStyleEditor = new HtmlStyleEditor();
             HtmlJsEditor htmlJsEditor = new HtmlJsEditor();
-            foreach (var item in htmlFiles) {
+            Parallel.ForEach(htmlFiles, item => {
                 var pathProvider = new PathProvider(item.FileName);
                 htmlStyleEditor.Edit(item.Tree, valueProvider, pathProvider);
                 htmlJsEditor.Edit(item.Tree, valueProvider, pathProvider);
-            }
+            });
         }
     }
 }

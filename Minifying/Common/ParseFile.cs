@@ -7,12 +7,13 @@ using Minifying.Abstract;
 using Minifying.Concrete.Css.Parsers;
 using Minifying.Concrete.Js.Parsers;
 using Minifying.Concrete.Html.Parsers;
+using System.Diagnostics;
 
 namespace Minifying.Common {
     static class ParseFile {
         private static Dictionary<FileType, IParser> fileParsers = new Dictionary<FileType, IParser> {
             { FileType.Css,new CssParser() },
-            { FileType.Js,new JsParser() },
+            { FileType.Js,new Concrete.Js.Parsers.JsParser() },
             { FileType.Html,new HtmlParser() }
         };
 

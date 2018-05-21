@@ -13,7 +13,7 @@ namespace Minifying.Concrete.Js.Visitors {
             new Visitor(idsMap).Visit(tree);
         }
 
-        class Visitor : JsBaseVisitor<object> {
+        class Visitor : JsParserBaseVisitor<object> {
             private Dictionary<string, string> idsMap;
 
             public Visitor(Dictionary<string, string> idsMap) {
@@ -24,7 +24,10 @@ namespace Minifying.Concrete.Js.Visitors {
                 if (context.StringLiteral() == null) { return null; }
 
                 var manager = new StringLiteralManager(context);
+
                 string id = manager.Value;
+                if (id.Length <= 1) { return null; }
+
                 if (idsMap.ContainsKey(id)) {
                     manager.Value = idsMap[id];
                     return null;
@@ -39,12 +42,12 @@ namespace Minifying.Concrete.Js.Visitors {
                 var ids = idsMap.Keys;
 
                 foreach (var item in ids) {
-                    if (id.IndexOf(item) >= 0 ) {
+                    if (id.IndexOf('#' + item) >= 0) {
                         manager.Value = id.Replace(item, idsMap[item]);
                     }
                 }
 
-                return base.VisitLiteral(context);
+                return null;
             }
         }
     }

@@ -51,8 +51,9 @@ htmlMisc
     ;
 
 htmlComment
-    : HTML_COMMENT
-    | HTML_CONDITIONAL_COMMENT
+    : HTML_COMMENT_CONDITIONAL
+	| HTML_COMMENT
+    | HTML_CONDITIONAL
     ;
 
 xhtmlCDATA

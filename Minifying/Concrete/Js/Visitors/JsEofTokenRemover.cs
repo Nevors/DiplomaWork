@@ -9,14 +9,17 @@ namespace Minifying.Concrete.Js.Visitors {
         public void Remove(IParseTree tree) {
             new Visitor().Visit(tree);
         }
-        class Visitor : JsBaseVisitor<object> {
+
+        class Visitor : JsParserBaseVisitor<object> {
             public override object VisitProgram([NotNull] JsParser.ProgramContext context) {
                 context.RemoveLastChild();
                 return base.VisitProgram(context);
             }
 
             public override object VisitEos([NotNull] JsParser.EosContext context) {
-                context.RemoveLastChild();
+                if (context.Eof() != null) {
+                    context.RemoveLastChild();
+                }
                 return null;
             }
         }

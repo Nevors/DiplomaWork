@@ -2,17 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using V = Minifying.Concrete.Js.Visitors;
-namespace Minifying.Concrete.Js.Editors
-{
-    class JsWsSymbolEditor : IEditor {
+namespace Minifying.Concrete.Js.Editors {
+    class JsWsSymbolsEditor : IEditor {
         public void ToEdit(IValueProvider valueProvider) {
-            var jsFiles = valueProvider.GetFiles();
+            var jsFiles = valueProvider.GetFiles(Entities.FileType.Js);
 
             var jsWsEditor = new V.JsWsSymbolsEditor();
-            foreach (var item in jsFiles) {
+            Parallel.ForEach(jsFiles, item => {
                 jsWsEditor.Edit(item.Tree);
-            }
+            });
         }
     }
 }

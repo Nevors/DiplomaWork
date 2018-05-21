@@ -16,7 +16,7 @@ namespace Test {
             OpenFileDialog ofd = new OpenFileDialog();
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.SelectedPath = "C:/Users/anduser/Desktop/CourseWork/ДИСК/Release/Example";
-            //fbd.ShowDialog();
+            fbd.ShowDialog();
             pathRoot = fbd.SelectedPath;
             var files = GetFiles(pathRoot);
             var result = Manager.ToMinimize(files, 0);
