@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Jint;
 using Minifying;
 
 namespace Test {
@@ -21,12 +22,18 @@ namespace Test {
             var files = GetFiles(pathRoot);
             var result = Manager.ToMinimize(files, 0);
 
+            var engine = new Engine()
+                .SetValue("log", new Action<object>(Console.WriteLine))
+                ;
+            engine.Execute(File.ReadAllText("..//..//../Minifying/Lib/Css/Csso/csso.js"));
+            engine.Execute("log(csso.minify('a{color:rgb(255,0,0)}').css)");
+
             foreach (var file in result) {
                 Console.WriteLine(file.Key);
                 Console.WriteLine(new StreamReader(file.Value).ReadToEnd());
                 file.Value.Position = 0;
             }
-            WriteFiles("C:/Users/anduser/Desktop/CourseWork/ДИСК/Release/Example_Min",result);
+            WriteFiles("C:/Users/anduser/Desktop/CourseWork/ДИСК/Release/Example_Min", result);
             Console.ReadKey();
         }
 
@@ -54,7 +61,7 @@ namespace Test {
             foreach (var item in files) {
                 string fileName = item.Key;
                 int index = fileName.LastIndexOf('\\');
-                if(index != -1) {
+                if (index != -1) {
                     string path = fileName.Substring(0, index + 1);
                     Directory.CreateDirectory(Path.Combine(pathRoot, path));
                 }

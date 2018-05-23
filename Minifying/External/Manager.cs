@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using Minifying.Concrete.Js.Editors;
 using System.Threading.Tasks;
+using Minifying.Concrete.Css.Editors;
 
 namespace Minifying {
     public static class Manager {
@@ -28,6 +29,9 @@ namespace Minifying {
             NamesEditor idsNameEditor = new NamesEditor();
             //idsNameEditor.ToEdit(valueProvider);
 
+            CssMinifyingEditor cssMinifyingEditor = new CssMinifyingEditor();
+            //cssMinifyingEditor.ToEdit(valueProvider);
+
             JsWsSymbolsEditor jsWsSymbolEditor = new JsWsSymbolsEditor();
             jsWsSymbolEditor.ToEdit(valueProvider);
 
@@ -36,6 +40,9 @@ namespace Minifying {
 
             HtmlCommentEditor htmlCommentEditor = new HtmlCommentEditor();
             htmlCommentEditor.ToEdit(valueProvider);
+
+            JsMinifyingEditor jsMinifyingEditor = new JsMinifyingEditor();
+            jsMinifyingEditor.ToEdit(valueProvider);
 
             var resultFiles = valueProvider.GetFiles().Where(f => !f.IsInternal);
             foreach (var file in resultFiles) {
