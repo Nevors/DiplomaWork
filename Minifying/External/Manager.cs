@@ -16,24 +16,47 @@ namespace Minifying {
     public static class Manager {
         public static Dictionary<string, Stream> ToMinimize(Dictionary<string, Stream> files, MinimizationType minimizations) {
             var valueProvider = new ValueProvider();
-            Parallel.ForEach(files, item => {
-                valueProvider.AddFile(ParseFile.ToParse(item.Key, item.Value));
-            });
+            var fileIdentifying = new FileIdentifying();
+            var parseFile = new ParseFile();
+
+            var csso = new CssOptimizer.Csso();
+            var jso = new JsOptimizer.Jso();
+
+            //Parallel.ForEach(files, item => {
+            foreach (var item in files) {
+                var type = fileIdentifying.GetType(item.Key, item.Value);
+                Stream stream;
+                switch (type) {
+                    case FileType.Css:
+                        stream = csso.ToOptimize(item.Value);
+                        break;
+                    case FileType.Js:
+                        stream = jso.ToOptimize(item.Value);
+                        break;
+                    default:
+                        stream = item.Value;
+                        break;
+                }
+
+                valueProvider.AddFile(parseFile.ToParse(item.Key, stream, type));
+            }
+           // });
+           
 
             HtmlInternalContentEditor replaceInternalCode = new HtmlInternalContentEditor();
             replaceInternalCode.ToEdit(valueProvider);
 
-            JsEofTokenRemover jsEofTokenRemover = new JsEofTokenRemover();
-            jsEofTokenRemover.ToEdit(valueProvider);
-
             NamesEditor idsNameEditor = new NamesEditor();
             //idsNameEditor.ToEdit(valueProvider);
 
-            CssMinifyingEditor cssMinifyingEditor = new CssMinifyingEditor();
-            //cssMinifyingEditor.ToEdit(valueProvider);
-
             JsWsSymbolsEditor jsWsSymbolEditor = new JsWsSymbolsEditor();
             jsWsSymbolEditor.ToEdit(valueProvider);
+
+            JsEofTokenRemover jsEofTokenRemover = new JsEofTokenRemover();
+            jsEofTokenRemover.ToEdit(valueProvider);
+
+            JsMinifyingEditor jsMinifying = new JsMinifyingEditor();
+            jsMinifying.ToEdit(valueProvider);
 
             HtmlWsSymbolsEditor htmlWsSymbolsEditor = new HtmlWsSymbolsEditor();
             htmlWsSymbolsEditor.ToEdit(valueProvider);
@@ -41,9 +64,9 @@ namespace Minifying {
             HtmlCommentEditor htmlCommentEditor = new HtmlCommentEditor();
             htmlCommentEditor.ToEdit(valueProvider);
 
-            JsMinifyingEditor jsMinifyingEditor = new JsMinifyingEditor();
-            jsMinifyingEditor.ToEdit(valueProvider);
-
+            CssMinifyingEditor cssMinifying = new CssMinifyingEditor();
+            cssMinifying.ToEdit(valueProvider);
+            
             var resultFiles = valueProvider.GetFiles().Where(f => !f.IsInternal);
             foreach (var file in resultFiles) {
                 if (file.Tree != null) {

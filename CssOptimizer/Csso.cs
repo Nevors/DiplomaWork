@@ -13,12 +13,21 @@ namespace CssOptimizer {
             engine.Execute(text);
         }
 
-        public string Optimize(string text) {
-            return engine
+        public Stream ToOptimize(Stream stream) {
+            var text = new StreamReader(stream).ReadToEnd();
+            var result =  engine
                 .SetValue("text", text)
                 .Execute("csso.minify(text).css;")
                 .GetCompletionValue()
                 .AsString();
+
+            var ms = new MemoryStream(result.Length);
+            var sw = new StreamWriter(ms);
+            sw.Write(result);
+            sw.Flush();
+            ms.Position = 0;
+
+            return ms;
         }
     }
 }

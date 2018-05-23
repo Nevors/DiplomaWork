@@ -23,7 +23,7 @@ namespace Minifying.Concrete.Html.Models {
             var curContent = styleContext.htmlContent();
             var stream = curContent.GetStream();
 
-            File = ParseFile.ToParse(IO.Path.GetRandomFileName(), stream, FileType.Css);
+            File = new ParseFile().ToParse(IO.Path.GetRandomFileName(), stream, FileType.Css);
             File.IsInternal = true;
 
             ContentContext content = new ContentContext(styleContext, File);

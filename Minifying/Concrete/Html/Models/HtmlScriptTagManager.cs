@@ -35,7 +35,7 @@ namespace Minifying.Concrete.Html.Models {
             HtmlContentContext content = null;
             if (File == null) {
                 var stream = curContent.GetStream();
-                File = ParseFile.ToParse(IO.Path.GetRandomFileName(), stream, FileType.Js);
+                File = new ParseFile().ToParse(IO.Path.GetRandomFileName(), stream, FileType.Js);
                 File.IsInternal = true;
                 valueProvider.AddFile(File);
 

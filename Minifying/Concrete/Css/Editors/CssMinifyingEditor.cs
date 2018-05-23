@@ -2,30 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ChakraCore.NET;
-using ChakraCore.NET.Hosting;
 using CssOptimizer;
 using Minifying.Concrete.Css.Parsers;
 using System.IO;
 using System.Threading.Tasks;
+using Minifying.Common;
+using System.Linq;
 
 namespace Minifying.Concrete.Css.Editors {
     class CssMinifyingEditor : IEditor {
         public void ToEdit(IValueProvider valueProvider) {
-            var cssFiles = valueProvider.GetFiles(Entities.FileType.Css);
+            var cssFiles = valueProvider.GetFiles(Entities.FileType.Css)
+                .Where(i => i.IsInternal);
             CssParser cssParser = new CssParser();
 
             Parallel.ForEach(cssFiles, item => {
                 var csso = new Csso();
-                var newText = csso.Optimize(item.Tree.GetText());
+                var stream = csso.ToOptimize(item.Tree.GetStream());
 
-                var ms = new MemoryStream();
-                var sw = new StreamWriter(ms);
-                sw.Write(newText);
-                sw.Flush();
-                ms.Position = 0;
-
-                item.Tree = cssParser.ToParse(ms);
+                item.Tree = cssParser.ToParse(stream);
             });
         }
     }

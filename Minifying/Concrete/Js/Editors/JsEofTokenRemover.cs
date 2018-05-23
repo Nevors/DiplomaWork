@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using V = Minifying.Concrete.Js.Visitors;
-using static AntlrGrammars.Js.JsParser;
 using Antlr4.Runtime;
 using System.Threading.Tasks;
 

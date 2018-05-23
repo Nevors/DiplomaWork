@@ -22,18 +22,12 @@ namespace Test {
             var files = GetFiles(pathRoot);
             var result = Manager.ToMinimize(files, 0);
 
-            var engine = new Engine()
-                .SetValue("log", new Action<object>(Console.WriteLine))
-                ;
-            engine.Execute(File.ReadAllText("..//..//../Minifying/Lib/Css/Csso/csso.js"));
-            engine.Execute("log(csso.minify('a{color:rgb(255,0,0)}').css)");
-
             foreach (var file in result) {
                 Console.WriteLine(file.Key);
                 Console.WriteLine(new StreamReader(file.Value).ReadToEnd());
                 file.Value.Position = 0;
             }
-            WriteFiles("C:/Users/anduser/Desktop/CourseWork/ДИСК/Release/Example_Min", result);
+            WriteFiles("Example_Min\\", result);
             Console.ReadKey();
         }
 
@@ -58,6 +52,7 @@ namespace Test {
         }
 
         static void WriteFiles(string pathRoot, Dictionary<string, Stream> files) {
+            Directory.CreateDirectory(pathRoot);
             foreach (var item in files) {
                 string fileName = item.Key;
                 int index = fileName.LastIndexOf('\\');

@@ -10,18 +10,14 @@ using Minifying.Concrete.Html.Parsers;
 using System.Diagnostics;
 
 namespace Minifying.Common {
-    static class ParseFile {
-        private static Dictionary<FileType, IParser> fileParsers = new Dictionary<FileType, IParser> {
+    class ParseFile {
+        private Dictionary<FileType, IParser> fileParsers = new Dictionary<FileType, IParser> {
             { FileType.Css,new CssParser() },
             { FileType.Js,new Concrete.Js.Parsers.JsParser() },
             { FileType.Html,new HtmlParser() }
         };
 
-        public static File ToParse(string relativeName, IO.Stream stream, FileType type = FileType.None) {
-            if(type == FileType.None) {
-                type = GetFileType(relativeName);
-            }
-
+        public File ToParse(string relativeName, IO.Stream stream, FileType type) {
             File result = new File {
                 FileName = relativeName,
                 Type = type
@@ -32,27 +28,8 @@ namespace Minifying.Common {
             }
 
             result.Stream = stream;
-            
+
             return result;
-        }
-
-        static public FileType GetFileType(string name) {
-            int indexPoint = name.LastIndexOf('.');
-            if (indexPoint == -1) {
-                return FileType.None;
-            }
-
-            string typeS = name.Substring(indexPoint + 1);
-            switch (typeS.ToUpper()) {
-                case "CSS":
-                    return FileType.Css;
-                case "HTML":
-                    return FileType.Html;
-                case "JS":
-                    return FileType.Js;
-                default:
-                    return FileType.None;
-            }
         }
     }
 }

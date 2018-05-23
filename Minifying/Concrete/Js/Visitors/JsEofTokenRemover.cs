@@ -12,7 +12,9 @@ namespace Minifying.Concrete.Js.Visitors {
 
         class Visitor : JsParserBaseVisitor<object> {
             public override object VisitProgram([NotNull] JsParser.ProgramContext context) {
-                context.RemoveLastChild();
+                if (context.Eof() != null) {
+                    context.RemoveLastChild();
+                }
                 return base.VisitProgram(context);
             }
 
