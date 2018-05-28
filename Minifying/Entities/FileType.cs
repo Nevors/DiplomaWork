@@ -7,6 +7,7 @@ namespace Minifying.Entities {
         None = 0,
         Css,
         Js,
-        Html
+        Html,
+        Image
     }
 }

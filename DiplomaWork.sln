@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minifying", "Minifying\Mini
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CssOptimizer", "CssOptimizer\CssOptimizer.csproj", "{D8A2B373-E4C1-4C70-977E-D4BF1DC7E64F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsOptimizer", "JsOptimizer\JsOptimizer.csproj", "{6F727511-4573-4E5A-BA6D-B2CF329A9BC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsOptimizer", "JsOptimizer\JsOptimizer.csproj", "{6F727511-4573-4E5A-BA6D-B2CF329A9BC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{501F90CB-9146-454F-BD8E-D9376ACE16C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{6F727511-4573-4E5A-BA6D-B2CF329A9BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F727511-4573-4E5A-BA6D-B2CF329A9BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F727511-4573-4E5A-BA6D-B2CF329A9BC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{501F90CB-9146-454F-BD8E-D9376ACE16C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{501F90CB-9146-454F-BD8E-D9376ACE16C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{501F90CB-9146-454F-BD8E-D9376ACE16C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{501F90CB-9146-454F-BD8E-D9376ACE16C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

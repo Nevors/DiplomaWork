@@ -30,7 +30,7 @@ lexer grammar JsLexer;
 
 channels { ERROR }
 
-options { superClass=JsBaseLexer; }
+options { superClass=AntlrGrammars.Js.JsBaseLexer; }
 
 MultiLineComment:               '/*' .*? '*/'             -> channel(HIDDEN);
 SingleLineComment:              '//' ~[\r\n\u2028\u2029]* -> channel(HIDDEN);

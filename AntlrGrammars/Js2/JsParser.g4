@@ -30,7 +30,7 @@ parser grammar JsParser;
 
 options {
     tokenVocab=JsLexer;
-    superClass=JsBaseParser;
+    superClass=AntlrGrammars.Js.JsBaseParser;
 }
 
 program

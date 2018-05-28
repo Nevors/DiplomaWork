@@ -11,9 +11,14 @@ using System.Linq;
 
 namespace Minifying.Concrete.Css.Editors {
     class CssMinifyingEditor : IEditor {
+        private readonly bool isInternal;
+
+        public CssMinifyingEditor(bool isInternal = true) {
+            this.isInternal = isInternal;
+        }
         public void ToEdit(IValueProvider valueProvider) {
             var cssFiles = valueProvider.GetFiles(Entities.FileType.Css)
-                .Where(i => i.IsInternal);
+                .Where(i => !isInternal ^ i.IsInternal);
             CssParser cssParser = new CssParser();
 
             Parallel.ForEach(cssFiles, item => {

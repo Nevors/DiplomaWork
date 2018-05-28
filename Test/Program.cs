@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Jint;
 using Minifying;
+using Minifying.External.Abstract;
+using Minifying.External.Models;
 
 namespace Test {
     class Program {
@@ -20,7 +22,9 @@ namespace Test {
             fbd.ShowDialog();
             pathRoot = fbd.SelectedPath;
             var files = GetFiles(pathRoot);
-            var result = Manager.ToMinimize(files, 0);
+            var manager = new Manager(files);
+            var answer = manager.ToMinimize(new MinimizationType());
+            var result = manager.GetFiles(new List<Answer<AnswerType>>());
 
             foreach (var file in result) {
                 Console.WriteLine(file.Key);

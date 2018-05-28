@@ -20,14 +20,18 @@ namespace Minifying.Common {
         public File ToParse(string relativeName, IO.Stream stream, FileType type) {
             File result = new File {
                 FileName = relativeName,
+                SearchName = relativeName,
                 Type = type
             };
 
             if (fileParsers.ContainsKey(type)) {
                 result.Tree = fileParsers[type].ToParse(stream);
+            } else {
+                var ms = new IO.MemoryStream();
+                stream.CopyTo(ms);
+                ms.Position = 0;
+                result.Stream = ms;
             }
-
-            result.Stream = stream;
 
             return result;
         }

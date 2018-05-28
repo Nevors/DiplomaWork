@@ -8,6 +8,7 @@ using System.Threading;
 
 namespace Minifying.Concrete.Common {
     class ValueProvider : IValueProvider{
+        private readonly List<IOutputMessage> outputMessages = new List<IOutputMessage>();
         Dictionary<FileType, Dictionary<string, File>> files = new Dictionary<FileType, Dictionary<string, File>>();
         object obj = new object();
 
@@ -22,7 +23,7 @@ namespace Minifying.Concrete.Common {
             } else {
                 dic = files[file.Type];
             }
-            dic.Add(file.FileName, file);
+            dic.Add(file.SearchName, file);
 
             Monitor.Exit(obj);
         }
@@ -44,6 +45,18 @@ namespace Minifying.Concrete.Common {
 
         public List<File> GetFiles() {
             return files.SelectMany(i => i.Value.Values).ToList();
+        }
+
+        public List<IOutputMessage> GetOutputMessages() {
+            return outputMessages;
+        }
+
+        public void RemoveFile(string fileName) {
+            foreach (var item in files.Values) {
+                if (item.ContainsKey(fileName)) {
+                    item.Remove(fileName);
+                }
+            }
         }
     }
 }

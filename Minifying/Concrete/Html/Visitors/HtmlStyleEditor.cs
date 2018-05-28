@@ -3,6 +3,7 @@ using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using AntlrGrammars.Html;
 using Minifying.Abstract;
+using Minifying.Abstract.Visitors.Html;
 using Minifying.Common;
 using Minifying.Concrete.Html.Models;
 using System;
@@ -16,7 +17,7 @@ namespace Minifying.Concrete.Html.Visitors {
             visitor.Visit(tree);
             visitor.NodesForRemove.ForEach(i => i.Remove());
         }
-        class Visitor : HtmlParserBaseVisitor<object> {
+        class Visitor : HtmlStyleVisitor<object> {
             private readonly IValueProvider valueProvider;
             private readonly IPathProvider pathProvider;
             public List<ParserRuleContext> NodesForRemove { get; } = new List<ParserRuleContext>();
@@ -26,27 +27,15 @@ namespace Minifying.Concrete.Html.Visitors {
                 this.pathProvider = pathProvider;
             }
 
-            public override object VisitHtmlElement([NotNull] HtmlParser.HtmlElementContext context) {
-                var tags = context.htmlTagName();
-                if (tags.Length == 0) { return base.VisitHtmlElement(context); }
-
-                var tagName = tags[0].TAG_NAME().GetText();
-                if (tagName.ToUpper() != "LINK") {
-                    return base.VisitHtmlElement(context);
-                }
-
+            public override void VisitLink(HtmlParser.HtmlElementContext context) {
                 var linkStyle = new HtmlLinkStyleTagManager(context);
-                linkStyle.Init(valueProvider,pathProvider);
-                //if (linkStyle.File == null) { NodesForRemove.Add(context); }
-                return null;
+                linkStyle.Init(valueProvider, pathProvider);
             }
 
-            public override object VisitStyle([NotNull] HtmlParser.StyleContext context) {
+            public override void VisitInteranaStyle(HtmlParser.StyleContext context) {
                 HtmlStyleTagManager htmlStyleTagManager = new HtmlStyleTagManager(context);
                 htmlStyleTagManager.Init(valueProvider);
-                return null;
             }
-
         }
     }
 }

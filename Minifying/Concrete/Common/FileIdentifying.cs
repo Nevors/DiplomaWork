@@ -22,6 +22,16 @@ namespace Minifying.Concrete.Common
                     return FileType.Html;
                 case "JS":
                     return FileType.Js;
+                case "JPEG":
+                    return FileType.Image;
+                case "JPG":
+                    return FileType.Image;
+                case "PNG":
+                    return FileType.Image;
+                case "BMP":
+                    return FileType.Image;
+                case "GIF":
+                    return FileType.Image;
                 default:
                     return FileType.None;
             }

@@ -11,9 +11,14 @@ using System.Text;
 namespace Minifying.Concrete.Js.Editors
 {
     class JsMinifyingEditor : IEditor {
+        private readonly bool isInternal;
+
+        public JsMinifyingEditor(bool isInternal = true) {
+            this.isInternal = isInternal;
+        }
         public void ToEdit(IValueProvider valueProvider) {
             var jsFile = valueProvider.GetFiles(Entities.FileType.Js)
-                .Where(i=>i.IsInternal);
+                .Where(i=> !isInternal ^ i.IsInternal);
 
             var remover = new Js.Visitors.JsEofTokenRemover();
             var wsEditor = new Js.Visitors.JsWsSymbolsEditor();

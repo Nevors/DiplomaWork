@@ -14,11 +14,13 @@ namespace Minifying.Concrete.Html.Editors {
 
             HtmlStyleEditor htmlStyleEditor = new HtmlStyleEditor();
             HtmlJsEditor htmlJsEditor = new HtmlJsEditor();
-            Parallel.ForEach(htmlFiles, item => {
+            //Parallel.ForEach(htmlFiles, item => {
+            foreach (var item in htmlFiles) {
                 var pathProvider = new PathProvider(item.FileName);
                 htmlStyleEditor.Edit(item.Tree, valueProvider, pathProvider);
                 htmlJsEditor.Edit(item.Tree, valueProvider, pathProvider);
-            });
+            }
+            //});
         }
     }
 }

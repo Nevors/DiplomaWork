@@ -1,0 +1,11 @@
+﻿@using Minifying.External.Models;
+
+<form action="/UploadFile" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" /><br />
+    @foreach (var item in typeof(MinimizationType).GetProperties()) {
+        @Html.CheckBox(string.Concat("opt.", item.Name)) @item.Name<br />
+    }
+    <input type="submit" value="Оптимизировать" />
+</form>
+
+
