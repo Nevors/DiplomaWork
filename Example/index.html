@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пример</title>
+    <link rel='styleSheet' type='text/css' href='site.css' />
+    <link rel='styleSheet' type='text/css' href='site2.css' />
+    <style>
+        .size_48{
+            font-size: 48px
+        }
+		p.bold_line{
+			color:blue;
+		}
+    </style>
+</head>
+<body>
+    <p id='p_red'>Строка красного цвета</p>
+    <p class="bold_line size_48">Полужирное выделение(синими)</p>
+    <p id="p_background_green">Строка с зеленым фоном</p>
+    <p class="size_48">Строка 48</p>
+    <script src="index.js"></script>
+	<script src="index2.js"></script>
+    <script>
+        var elem =document.getElementsByClassName("bold_line")[0];
+        elem.style.fontWeight = "bold";
+    </script>
+</body>
+</html>
+
+
+

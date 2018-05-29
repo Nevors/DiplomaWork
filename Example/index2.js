@@ -1,0 +1,1 @@
+elem.style.color = "red";
