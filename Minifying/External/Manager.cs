@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Minifying.Concrete.Css.Editors;
 using Minifying.External.Abstract;
 using Minifying.External.Models;
+using Minifying.Concrete.Js.Models;
 
 namespace Minifying {
     public class Manager {
@@ -29,21 +30,23 @@ namespace Minifying {
             valueProvider = new ValueProvider();
 
             var csso = new CssOptimizer.Csso();
-            var jso = new JsOptimizer.Jso();
-            
+            var jso = new JsOptimizerFacade();
+
             Parallel.ForEach(files, item => {
-                var type = fileIdentifying.GetType(item.Key, item.Value);
+                var filePath = item.Key.Replace('/', '\\');
+
+                var type = fileIdentifying.GetType(filePath, item.Value);
                 Stream stream = item.Value;
 
                 if (type == Entities.FileType.Css
                     && min.IsCommonCss) {
-                    stream = csso.ToOptimize(item.Value);
+                    stream = csso.ToOptimize(item.Value) ?? stream;
                 } else if (type == Entities.FileType.Js
                              && min.IsCommonJs) {
-                    stream = jso.ToOptimize(item.Value);
+                    stream = jso.ToOptimize(filePath, item.Value, valueProvider.GetOutputMessages()) ?? stream;
                 }
 
-                valueProvider.AddFile(parseFile.ToParse(item.Key, stream, type));
+                valueProvider.AddFile(parseFile.ToParse(filePath, stream, type));
             });
 
             List<Abstract.IEditor> listOpt = new List<Abstract.IEditor>();
@@ -51,7 +54,7 @@ namespace Minifying {
             if (min.IsLoadExtJsFile) {
                 listOpt.Add(new HtmlLoadExtJsEditor());
             }
-           
+
             listOpt.Add(new HtmlInternalContentEditor());
 
             if (min.IsUnionJsFile) {
@@ -70,10 +73,6 @@ namespace Minifying {
                 listOpt.Add(new HtmlCommentEditor());
             }
 
-            if (min.IsNames) {
-                listOpt.Add(new NamesEditor());
-            }
-
             if (min.IsCommonJs) {
                 listOpt.Add(new JsMinifyingEditor());
                 if (min.IsUnionJsFile) {
@@ -88,30 +87,15 @@ namespace Minifying {
                 }
             }
 
+            if (min.IsNames) {
+                listOpt.Add(new NamesEditor());
+            }
+
             if (min.IsImage) {
                 listOpt.Add(new ImageEditor());
             }
 
             listOpt.ForEach(i => i.ToEdit(valueProvider));
-
-            var message = new BaseOutputMessage("ТЕСТИРОВАНИЕ");
-            message.AddAction(AnswerType.Ok, () => {
-                Console.WriteLine("ТЕСТИРОВАНИЕ ОК!!!!");
-            });
-            message.AddAction(AnswerType.No, () => {
-                Console.WriteLine("ТЕСТИРОВАНИЕ NO!!!!");
-            });
-            valueProvider.GetOutputMessages().Add(message);
-
-            message = new BaseOutputMessage("ТЕСТИРОВАНИЕ");
-            message.AddAction(AnswerType.Ok, () => {
-                Console.WriteLine("ТЕСТИРОВАНИЕ ОК!!!!");
-            });
-            message.AddAction(AnswerType.No, () => {
-                Console.WriteLine("ТЕСТИРОВАНИЕ NO!!!!");
-            });
-
-            valueProvider.GetOutputMessages().Add(message);
 
             var list = new List<IOutputMessage>();
 
@@ -124,7 +108,7 @@ namespace Minifying {
             var list = valueProvider.GetOutputMessages();
 
             foreach (var answer in answers) {
-                if(answer.Id >= list.Count) {
+                if (answer.Id >= list.Count) {
                     continue;
                 }
                 list[answer.Id].ExecuteAction(answer.Value);

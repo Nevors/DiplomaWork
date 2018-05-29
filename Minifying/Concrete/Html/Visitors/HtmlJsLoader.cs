@@ -39,12 +39,11 @@ namespace Minifying.Concrete.Html.Visitors {
                         }
                         return null;
                     }
-
-                    HttpWebRequest req = WebRequest.CreateHttp(path);
-                    req.Method = "GET";
                     try {
+                        HttpWebRequest req = WebRequest.CreateHttp(path);
+                        req.Method = "GET";
                         var result = req.GetResponse();
-                        var fileName = Path.GetRandomFileName()+".js";
+                        var fileName = Path.GetRandomFileName() + ".js";
                         Entities.File file = new ParseFile().ToParse(fileName, result.GetResponseStream(), Entities.FileType.Js);
                         valueProvider.AddFile(file);
 

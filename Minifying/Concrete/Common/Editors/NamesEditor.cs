@@ -29,7 +29,6 @@ namespace Minifying.Concrete.Common.Editors {
             foreach (var item in cssFiles) {
                 cssIdsSearcher.Search(item.Tree, idsFreqList);
                 cssClassNamesSearcher.Search(item.Tree, classNamesFreqList);
-                Trace.TraceInformation("1");
             }
 
 
@@ -38,8 +37,6 @@ namespace Minifying.Concrete.Common.Editors {
             foreach (var item in htmlFiles) {
                 htmlIdsSercher.Search(item.Tree, idsFreqList);
                 htmlClassNamesSearcher.Search(item.Tree, classNamesFreqList);
-                Trace.TraceInformation("2");
-
             }
 
             INameGenerator nameGen = new NameGenerator();
@@ -50,27 +47,24 @@ namespace Minifying.Concrete.Common.Editors {
 
             var cssIdsEditor = new CssV.CssIdsEditor();
             var cssClassNamesEditor = new CssV.CssClassNamesEditor();
-            Parallel.ForEach(cssFiles, item => {
+            foreach (var item in cssFiles){
                 cssIdsEditor.Replace(item.Tree, idsMap);
                 cssClassNamesEditor.Replace(item.Tree, classNamesMap);
-                Trace.TraceInformation("3");
-            });
+            }
 
             var htmlIdsEditor = new HtmlV.HtmlIdsEditor();
             var htmlClassNamesEditor = new HtmlV.HtmlClassNamesEditor();
-            Parallel.ForEach(htmlFiles, item => {
+            foreach(var item in htmlFiles){
                 htmlIdsEditor.Replace(item.Tree, idsMap);
                 htmlClassNamesEditor.Replace(item.Tree, classNamesMap);
-                Trace.TraceInformation("4");
-            });
+            }
 
             var jsIdsEditor = new JsV.JsIdsEditor();
             var jsClassNamesEditor = new JsV.JsClassNamesEditor();
-            Parallel.ForEach(jsFiles, item => {
-                jsIdsEditor.Replace(item.Tree, idsMap);
-                jsClassNamesEditor.Replace(item.Tree, classNamesMap);
-                Trace.TraceInformation("5");
-            });
+            foreach (var item in jsFiles){
+                jsIdsEditor.Replace(item.Tree, valueProvider, idsMap);
+                jsClassNamesEditor.Replace(item.Tree, valueProvider, classNamesMap);
+            }
         }
 
         public Dictionary<string, string> GetMapNames(IEnumerable<string> list, IFactoryNames factoryNames) {

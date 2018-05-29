@@ -1,0 +1,1 @@
+var elem=document.getElementById("b");elem.style.color="red";elem=document.getElementsByClassName("c")[0];elem.style.fontWeight="bold";

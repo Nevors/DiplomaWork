@@ -3,7 +3,9 @@
 <form action="/UploadFile" method="post" enctype="multipart/form-data">
     <input type="file" name="file" /><br />
     @foreach (var item in typeof(MinimizationType).GetProperties()) {
-        @Html.CheckBox(string.Concat("opt.", item.Name)) @item.Name<br />
+        var name = string.Concat("opt.", item.Name);
+        @Html.CheckBox(name)
+        @Html.Label(name, item.CustomAttributes.First().ConstructorArguments.First().Value.ToString())<br />
     }
     <input type="submit" value="Оптимизировать" />
 </form>

@@ -44,5 +44,14 @@ namespace Minifying.Common {
 
             return ms;
         }
+
+        public static IParseTree CloseSt<T>(this IParseTree node) where T:class{
+            var parent = node.Parent;
+            while(!(parent is T)) {
+                parent = parent.Parent;
+            }
+
+            return parent;
+        }
     }
 }

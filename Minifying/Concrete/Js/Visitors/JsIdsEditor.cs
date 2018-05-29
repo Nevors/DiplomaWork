@@ -1,6 +1,8 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using AntlrGrammars.Js;
+using Minifying.Abstract;
+using Minifying.Common;
 using Minifying.Concrete.Js.Models;
 using System;
 using System.Collections.Generic;
@@ -9,15 +11,17 @@ using System.Text;
 
 namespace Minifying.Concrete.Js.Visitors {
     class JsIdsEditor {
-        public void Replace(IParseTree tree, Dictionary<string, string> idsMap) {
-            new Visitor(idsMap).Visit(tree);
+        public void Replace(IParseTree tree, IValueProvider valueProvider, Dictionary<string, string> idsMap) {
+            new Visitor(idsMap, valueProvider).Visit(tree);
         }
 
         class Visitor : JsParserBaseVisitor<object> {
             private Dictionary<string, string> idsMap;
-
-            public Visitor(Dictionary<string, string> idsMap) {
+            private readonly IValueProvider valueProvider;
+            FactoryOutputMessage factoryMessage = new FactoryOutputMessage();
+            public Visitor(Dictionary<string, string> idsMap, IValueProvider valueProvider) {
                 this.idsMap = idsMap;
+                this.valueProvider = valueProvider;
             }
 
             public override object VisitLiteral([NotNull] JsParser.LiteralContext context) {
@@ -29,13 +33,18 @@ namespace Minifying.Concrete.Js.Visitors {
                 if (id.Length <= 1) { return null; }
 
                 if (idsMap.ContainsKey(id)) {
-                    manager.Value = idsMap[id];
+                    Answer(idsMap[id], manager, context);
                     return null;
                 }
 
                 var id2 = id.Substring(1);
                 if (idsMap.ContainsKey(id2)) {
-                    manager.Value = id[0] + idsMap[id2];
+                    string will = id[0] + idsMap[id2];
+                    if (!id.StartsWith("#")) {
+                        Answer(will, manager, context);
+                    } else {
+                        manager.Value = will;
+                    }
                     return null;
                 }
 
@@ -48,6 +57,19 @@ namespace Minifying.Concrete.Js.Visitors {
                 }
 
                 return null;
+            }
+
+            void Answer(string will, StringLiteralManager manager, IParseTree tree) {
+                var statement = tree.CloseSt<JsParser.StatementContext>();
+                var message = factoryMessage
+                          .CreateMessage($"Заменить {manager.Value}? \r\n{statement.GetText()}")
+                          .AddAction(
+                                External.Models.AnswerType.Ok,
+                                () => {
+                                    manager.Value = will;
+                                })
+                          .GetMessage();
+                valueProvider.GetOutputMessages().Add(message);
             }
         }
     }

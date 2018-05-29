@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace JsOptimizer
 {
@@ -32,14 +33,42 @@ namespace JsOptimizer
 
             using (var s = req.GetRequestStream()) {
                 var sw = new StreamWriter(s);
-                sw.Write("compilation_level=ADVANCED_OPTIMIZATIONS&output_format=text&output_info=compiled_code&js_code=");
+                string query = "";
+                query += "output_format=text";
+                query += "&compilation_level=SIMPLE_OPTIMIZATIONS";
+                query += "&output_info=compiled_code";
+                query += "&js_code=";
+                sw.Write(query);
                 sw.Write(text);
                 sw.Flush();
-                s.Close();
+                //s.Close();
             }
 
-            var res = req.GetResponse();
-            return res.GetResponseStream();
+            var res = (HttpWebResponse)req.GetResponse();
+
+            if (res.ContentLength == 0) {
+                stream.Position = 0;
+                return stream;
+            }
+
+            var streamRes = new MemoryStream();
+            res.GetResponseStream().CopyTo(streamRes);
+
+            streamRes.Position = 0;
+
+            string str = new StreamReader(streamRes).ReadToEnd();
+
+            char[] error = new char[5];
+            
+            var swRes = new StreamReader(streamRes);
+            swRes.Read(error, 0, 5);
+            streamRes.Position = 0;
+
+            if (new string(error).ToUpper() == "ERROR") {
+                throw new Exception(swRes.ReadToEnd());
+            }
+           
+            return streamRes;
         }
     }
 }
